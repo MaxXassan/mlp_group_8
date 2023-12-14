@@ -16,7 +16,7 @@ class CustomFashionMNIST(Dataset):
 
     def __getitem__(self, idx):
         image_row = self.data.iloc[idx, 1:]  # Assuming first column is label
-        image = np.array(image_row).astype('uint8').reshape(28, 28)  # Reshape to 28x28 for FashionMNIST
+        image = np.array(image_row).astype('uint8').reshape(28, 28)  # reshape to 28x28 for our dataset
         label = self.data.iloc[idx, 0]  # First column is the label
 
         if self.transform:
@@ -30,8 +30,8 @@ transform = transforms.Compose([
 ])
 
 # Custom dataset
-train_dataset = CustomFashionMNIST(csv_file='./data/train.csv', transform=transform)
-test_dataset = CustomFashionMNIST(csv_file='./data/test.csv', transform=transform)
+train_dataset = CustomFashionMNIST(csv_file='../../data/fashion-mnist_train.csv', transform=transform)
+test_dataset = CustomFashionMNIST(csv_file='../../data/fashion-mnist_test.csv', transform=transform)
 
 # Data loaders
 batch_size = 64  # Define your batch size
