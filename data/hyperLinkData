@@ -1,6 +1,5 @@
 https://drive.google.com/drive/folders/1STQW-wiVLCWy4iOKwR_ZkZIv5GxDbMRr?usp=drive_link
 
-put the two dataset files(fashion-mnist_test.csv and fashion-mnist_train.csv) in the datafolder right next to
-this file(hyperLinkData).
+We put a link here to the dataset for completeness
 
 The files are not included in the actual repo because they dont fit in lfs right now.
