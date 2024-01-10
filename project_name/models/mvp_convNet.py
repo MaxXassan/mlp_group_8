@@ -1,7 +1,7 @@
 import torch
-import torch.nn as nn
 import torchvision
 import torchvision.transforms as transforms
+
 from model import ConvNet
 import matplotlib.pyplot as plt
 import numpy as np
@@ -25,10 +25,10 @@ if __name__ == '__main__':
     # Device configuration
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-    # Hyper-parameters
+    #this batch size and learning rate showed best results
     num_epochs = 10
-    batch_size = 64
-    learning_rate = 0.001
+    batch_size = 100
+    learning_rate = 0.002
 
     # Data transformation
     #transform = transforms.Compose([
@@ -42,7 +42,7 @@ if __name__ == '__main__':
         transforms.ToTensor()
     ])
 
-    # Loading the FashionMNIST dataset
+    #loading the FashionMNIST dataset
     train_dataset = torchvision.datasets.FashionMNIST(root='./data', train=True,
                                                     download=True, transform=transformation)
 
