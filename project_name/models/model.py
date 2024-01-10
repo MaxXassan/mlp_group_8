@@ -4,6 +4,9 @@ import matplotlib.pyplot as plt
 
 
 class ConvNet(nn.Module):
+    #constructor of the ConvNet class, using cross entropy as its loss function.
+    #the rest is specified by the person creating an instance of this class.
+    #model architecture inspired by https://doi.org/10.37398/jsr.2020.640251.
     def __init__(self, train_loader, test_loader, device, num_epochs, learning_rate):
         super(ConvNet, self).__init__()
         self.layers = nn.Sequential(
@@ -34,10 +37,10 @@ class ConvNet(nn.Module):
 
     def forward(self, x):
         return self.layers(x)
-    
+
+    # evaluate training loss, test loss, and accuracy after each epoch
     def _evaluate_model(self, epoch):
         
-        # Evaluate training loss, test loss, and accuracy after each epoch
         self.eval()
 
         with torch.no_grad():
@@ -62,11 +65,12 @@ class ConvNet(nn.Module):
 
         print(f'Epoch [{epoch + 1}/{self.num_epochs}], Accuracy: {accuracy:.2f}%, Train Loss: {self.train_losses[-1]:.4f}, Test Loss: {self.test_losses[-1]:.4f}')
 
+    #function to train the model
     def train_model(self):
         
         self.optimizer = torch.optim.SGD(self.parameters(), lr=self.learning_rate)
 
-        # Training loop
+        #training loop
         for epoch in range(self.num_epochs):
             for i, (images, labels) in enumerate(self.train_loader, 0):
                 images = images.to(self.device)
@@ -84,17 +88,17 @@ class ConvNet(nn.Module):
                     
             self._evaluate_model(epoch)
             
-        #Saving the weights
-        torch.save(self.state_dict(), '../../../../Desktop/mlp/model_weights.pth')
+        #saving the weights
+        torch.save(self.state_dict(), './modelweights/model_weights.pth')
 
     def plots(self):
-        # Plotting accuracy, train loss, and test loss
+        #plotting accuracy, train loss, and test loss
         epochs = range(1, self.num_epochs + 1)
 
-        # Accuracy plot
+        #accuracy plot
         plt.figure(figsize=(10, 5))
         plt.plot(epochs, self.accuracies, marker='o', linestyle='-', color='b', label='Accuracy')
-        plt.axhline(y=5, color='r', linestyle='-')
+        plt.axhline(y=10, color='r', linestyle='-') #horizontal reference line at 10
         plt.title('Accuracy Over Epochs')
         plt.xlabel('Epochs')
         plt.ylabel('Accuracy (%)')
@@ -102,7 +106,7 @@ class ConvNet(nn.Module):
         plt.grid(True)
         plt.show()
 
-        # Train and test loss plot
+        #train and test loss plot
         plt.figure(figsize=(10, 5))
         plt.plot(epochs, self.train_losses, marker='o', linestyle='-', color='r', label='Train Loss')
         plt.plot(epochs, self.test_losses, marker='o', linestyle='-', color='g', label='Test Loss')

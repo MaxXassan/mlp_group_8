@@ -1,25 +1,25 @@
 import torch
-import torch.nn as nn
 import torchvision
 import torchvision.transforms as transforms
+
 from model import ConvNet
 
 if __name__ == '__main__':
     
-    # Device configuration
+    #use gpu is available
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-    # Hyper-parameters
+    #this batch size and learning rate showed best results
     num_epochs = 10
-    batch_size = 64
-    learning_rate = 0.001
+    batch_size = 100
+    learning_rate = 0.002
 
-    # Data transformation
+    #normalize the data to range [0,1]
     transform = transforms.Compose([
         transforms.ToTensor()
     ])
 
-    # Loading the FashionMNIST dataset
+    #loading the FashionMNIST dataset
     train_dataset = torchvision.datasets.FashionMNIST(root='./data', train=True,
                                                     download=True, transform=transform)
 
