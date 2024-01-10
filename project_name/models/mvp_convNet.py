@@ -57,13 +57,13 @@ if __name__ == '__main__':
 
 
     # Load pre-trained weights
-    model_weights_path = 'C:/Users/Eier/Documents/github/mlp_group_8/project_name/models/modelweights/model_weights.pth'  # Replace with the actual path to your pre-trained weights
+    model_weights_path = r"C:\Users\jelle\PycharmProjects\mlp_group_8\project_name\models\modelweights\model_weights.pth"
     model.load_state_dict(torch.load(model_weights_path, map_location=device))
 
     # Apply the transform and add a batch dimension
     #image = transform(image).unsqueeze(0)
     # Test the model on a single image
-    image_path = r"C:\Users\Eier\Documents\personal\AI stuff\ML2024\Preproccessing\images\orig\t_shirt2.jpg"
+    image_path = r"C:\Users\jelle\Desktop\mlp\figures\1836050e6a1b47df90a8bd400b92a5c5.jpg"
     test_image = load_image(image_path)
 
     test_image = transformation(test_image)

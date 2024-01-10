@@ -2,6 +2,6 @@
 torch
 torchvision
 torchaudio 
-flask
-flask_cors
+Flask
+flask-cors
 requests
