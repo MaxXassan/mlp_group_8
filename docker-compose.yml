@@ -1,0 +1,9 @@
+version: "3.8"
+
+services:
+  backend:
+    build: ./project_name
+    container_name: mlp-backend
+    ports:
+      - 5000:5000
+    restart: always
