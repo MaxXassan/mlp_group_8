@@ -1,4 +1,8 @@
---index-url https://download.pytorch.org/whl/cu118
+streamlit
+numpy
+os
+sys
+Pillow
 torch
 torchvision
 torchaudio 
