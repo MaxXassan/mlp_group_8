@@ -1,0 +1,11 @@
+streamlit
+numpy
+os
+sys
+Pillow
+torch
+torchvision
+torchaudio 
+Flask
+flask-cors
+requests
