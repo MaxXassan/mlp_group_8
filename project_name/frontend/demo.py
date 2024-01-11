@@ -2,7 +2,6 @@ import streamlit as st
 import os
 import sys
 import torch
-import matplotlib.pyplot as plt
 import torchvision.transforms as T
 import numpy as np
 from PIL import Image

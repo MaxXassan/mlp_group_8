@@ -1,7 +1,6 @@
 streamlit
 numpy
-os
-sys
+matplotlib
 Pillow
 torch
 torchvision
