@@ -23,7 +23,7 @@ def show_image_with_prediction(image, predicted_class):
 
 if __name__ == '__main__':
     # Device configuration
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    device = 'cpu'#torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 
 
@@ -42,21 +42,22 @@ if __name__ == '__main__':
  
 
     # Initialize your model
-    model = ConvNet(device).to(device)
+    model = ConvNet().to(device)
 
 
     # Load pre-trained weights
-    model_weights_path = r"project_name\models\modelweights\model_weights.pth"
+    model_weights_path = r"modelweights\model_weights.pth"
     model.load_state_dict(torch.load(model_weights_path, map_location=device))
 
     # Apply the transform and add a batch dimension
     #image = transform(image).unsqueeze(0)
     # Test the model on a single image
-    image_path = r"C:\Users\jelle\Desktop\mlp\figures\1836050e6a1b47df90a8bd400b92a5c5.jpg"
+    image_path = r"C:\Users\Caden\Desktop\Github\mlp_group_8\project_name\models\1836050e6a1b47df90a8bd400b92a5c5.jpg"
     test_image = load_image(image_path)
 
     test_image = transformation(test_image)
 
+    print(test_image.shape)
 
     test_image_tensor = test_image
     #test_image.show()
@@ -65,6 +66,7 @@ if __name__ == '__main__':
     with torch.no_grad():
         model.eval()
         test_image_tensor = test_image_tensor.unsqueeze(0)
+        print("TestImage Shape::", test_image_tensor.shape)
         output = model(test_image_tensor)
 
     # Get the predicted class index

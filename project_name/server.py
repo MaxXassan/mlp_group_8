@@ -1,8 +1,6 @@
 from flask import Flask, request, jsonify, make_response
-import io
 from flask_cors import CORS, cross_origin
-from functools import reduce
-from utils import transform_image, get_prediction
+from backend.utils import transform_image, get_prediction
 
 app = Flask(__name__)
 CORS(app, support_credentials=True)
@@ -14,6 +12,8 @@ def make_prediction():
 
     transformed_image = transform_image(imagefile.read())
 
+    print('Transformed Image', transformed_image.shape)
+    
     prediction = get_prediction(transformed_image)
 
     return jsonify({ "prediction": prediction }), 200

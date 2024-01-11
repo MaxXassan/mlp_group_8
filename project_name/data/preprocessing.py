@@ -4,6 +4,7 @@ import torchvision.transforms as transforms
 #    transforms.ToTensor()
 #])
 # Apply the same transform used for training
+
 def get_transformation():
     transformation = transforms.Compose([
         transforms.Resize((28,28)),

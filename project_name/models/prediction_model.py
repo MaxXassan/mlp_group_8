@@ -7,7 +7,7 @@ class ConvNet(nn.Module):
     #constructor of the ConvNet class, using cross entropy as its loss function.
     #the rest is specified by the person creating an instance of this class.
     #model architecture inspired by https://doi.org/10.37398/jsr.2020.640251.
-    def __init__(self, device):
+    def __init__(self):
         super(ConvNet, self).__init__()
         self.layers = nn.Sequential(
             nn.Conv2d(1, 64, 2),
@@ -26,7 +26,6 @@ class ConvNet(nn.Module):
         self.train_losses = []
         self.test_losses = []
         self.accuracies = []
-        self.device = device 
         self.model = None
         self.criterion = nn.CrossEntropyLoss()
         self.optimizer = None
