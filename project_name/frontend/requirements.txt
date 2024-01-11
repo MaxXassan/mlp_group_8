@@ -1,7 +1,5 @@
 streamlit
 numpy
-os
-sys
 Pillow
 torch
 torchvision
