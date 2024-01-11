@@ -37,7 +37,6 @@ if __name__ == '__main__':
     # Apply the same transform used for training
     transformation = transforms.Compose([
         transforms.Resize((28,28)),
-        transforms.GaussianBlur(kernel_size=1.0, sigma=0.1),
         transforms.RandomInvert(p=1),
         transforms.Grayscale(),
         transforms.ToTensor()

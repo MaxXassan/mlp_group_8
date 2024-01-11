@@ -6,10 +6,10 @@ import io
 import json
 import sys
 
-from models.prediction_model import ConvNet
+from models.model import ConvNet
 from data.preprocessing import get_transformation
 
-device = 'cpu' #torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+device = 'cpu'
 model = ConvNet().to(device)
 
 model_weights_path = r"models\modelweights\model_weights.pth"
@@ -41,6 +41,3 @@ def get_prediction(transformed_image):
     with torch.no_grad():
         y_hat = model(transformed_image).argmax(dim=1)
     return classes[y_hat.item()]
-
-if __name__ == '__main__':
-    print(sys.path[1])

@@ -7,7 +7,12 @@ class ConvNet(nn.Module):
     #constructor of the ConvNet class, using cross entropy as its loss function.
     #the rest is specified by the person creating an instance of this class.
     #model architecture inspired by https://doi.org/10.37398/jsr.2020.640251.
-    def __init__(self, train_loader, test_loader, device, num_epochs, learning_rate):
+    def __init__(self, 
+                 train_loader = None, 
+                 test_loader = None, 
+                 device = 'cpu', 
+                 num_epochs = None, 
+                 learning_rate = None):
         super(ConvNet, self).__init__()
         self.layers = nn.Sequential(
             nn.Conv2d(1, 64, 2),
@@ -41,6 +46,8 @@ class ConvNet(nn.Module):
     # evaluate training loss, test loss, and accuracy after each epoch
     def _evaluate_model(self, epoch):
         
+        if self.test_loader == None or self.num_epochs == None or self.train_loader == None or self.learning_rate == None: return
+
         self.eval()
 
         with torch.no_grad():
@@ -68,6 +75,8 @@ class ConvNet(nn.Module):
     #function to train the model
     def train_model(self):
         
+        if self.test_loader == None or self.num_epochs == None or self.train_loader == None or self.learning_rate == None: return
+
         self.optimizer = torch.optim.SGD(self.parameters(), lr=self.learning_rate)
 
         #training loop
@@ -92,6 +101,9 @@ class ConvNet(nn.Module):
         torch.save(self.state_dict(), './modelweights/model_weights.pth')
 
     def plots(self):
+
+        if self.num_epochs == None or self.accuracies == None or self.train_losses == None or self.test_losses == None: return
+        
         #plotting accuracy, train loss, and test loss
         epochs = range(1, self.num_epochs + 1)
 

@@ -1,9 +1,5 @@
 import torchvision.transforms as transforms
-# Data transformation
-#transform = transforms.Compose([
-#    transforms.ToTensor()
-#])
-# Apply the same transform used for training
+
 
 def get_transformation():
     transformation = transforms.Compose([
