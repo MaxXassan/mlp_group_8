@@ -5,14 +5,17 @@ import torch
 import io
 import json
 import sys
+import os
+
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.append(project_root)
 
 from models.model import ConvNet
 from data.preprocessing import get_transformation
 
 device = 'cpu'
 model = ConvNet().to(device)
-
-model_weights_path = r"models\modelweights\model_weights.pth"
+model_weights_path = os.path.join(project_root, 'models', 'modelweights', 'model_weights.pth')
 model.load_state_dict(torch.load(model_weights_path, map_location=device))
 
 classes = {
