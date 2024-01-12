@@ -5,6 +5,8 @@ from backend.utils import transform_image, get_prediction
 app = Flask(__name__)
 CORS(app, support_credentials=True)
 
+#gets the image from the request.
+#then transforms the image, makes a prediction and returns that prediction.
 @app.route('/make-prediction', methods=['POST'])
 @cross_origin(supports_credentials=True)
 def make_prediction():

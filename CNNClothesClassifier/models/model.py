@@ -7,6 +7,7 @@ class ConvNet(nn.Module):
     #constructor of the ConvNet class, using cross entropy as its loss function.
     #the rest is specified by the person creating an instance of this class.
     #model architecture inspired by https://doi.org/10.37398/jsr.2020.640251.
+    #can be used both for training the model, but also to create an empty network to load the weights into.
     def __init__(self, 
                  train_loader = None, 
                  test_loader = None, 
