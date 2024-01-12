@@ -17,21 +17,22 @@ techniques to make accurate predictions based on input images.
 # Prerequisites
 Before you begin, ensure you have met the following requirements:
 
-Docker: https://docs.docker.com/desktop/
-Python >= 3.8: https://www.python.org/downloads/
+* Docker: https://docs.docker.com/desktop/
 
-Installation
+* Python >= 3.8: https://www.python.org/downloads/
+
+# Installation
 Follow these steps to set up and run the Clothing Classification ML Model:
 
-git clone https://github.com/yourusername/clothing-classification.git
-cd MLP_GROUP_8
+* git clone https://github.com/yourusername/clothing-classification.git
+
+* cd MLP_GROUP_8
 
 Then to run the application:
-docker-compose up --build
+* docker-compose up --build
 
 # Demo
-To use the streamlit demo
-Either follow this link: 
-https://fashion-mnist-clothing-classifier.streamlit.app/
-or it can be run locally or over a network through: 
-going to the "mlp_group_8/CNNClothesClassifier/frontend" directory and typing "python -m streamlit run demo.py
+To use the streamlit demo follow this link: 
+* https://fashion-mnist-clothing-classifier.streamlit.app/
+or run it locally or over a network through: 
+* going to the "mlp_group_8/CNNClothesClassifier/frontend" directory and typing "python -m streamlit run demo.py
