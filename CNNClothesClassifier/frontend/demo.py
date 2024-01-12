@@ -21,15 +21,14 @@ from data.preprocessing import get_transformation
 if __name__== "__main__":
     message = """
     # Clothing Oracle v.1
-    Welcome! I am the clothing oracle, show me a piece of clothing and I will tell you what is!
+    Welcome! I am the clothing oracle, show me a piece of clothing and I will tell you what it is!
 """
-
     st.write(message)
 
     model.load_state_dict(torch.load(model_weights_path, map_location=device))
 
     st.write("# Upload your photo")
-    uploaded_files = st.file_uploader("Choose an image file (.jpg)", accept_multiple_files=True)
+    uploaded_files = st.file_uploader("Choose an image file!", accept_multiple_files=True)
     for uploaded_file in uploaded_files:
         bytes_data = uploaded_file.read()
         #st.write(bytes_data)
