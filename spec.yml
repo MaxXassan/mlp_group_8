@@ -1,6 +1,6 @@
 openapi: "3.0.2"
 info: 
-  title: Clothese Classifier API
+  title: Clothes Classifier API
   version: "1.0"
   description: |
     An API for getting a clothing piece classified by a CNN trained on FashionMNIST dataset.
@@ -34,4 +34,13 @@ paths:
                 type: object
                 properties:
                   prediction:
+                    type: string
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errorMessage:
                     type: string
