@@ -1,0 +1,37 @@
+openapi: "3.0.2"
+info: 
+  title: Clothese Classifier API
+  version: "1.0"
+  description: |
+    An API for getting a clothing piece classified by a CNN trained on FashionMNIST dataset.
+  
+servers:
+  - url: http://localhost:5000
+
+paths:
+  /make-prediction:
+    post:
+      tags:
+        - Predict Routes
+      description: Route to post an image and get a response with a classification of the image
+      requestBody:
+        required: true
+        content:
+          multipartform/form-data:
+            schema:
+              type: object
+              properties:
+                myimage:
+                  type: string
+                  format: binary
+
+      responses:
+        '200':
+          description: Image processed and classified
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  prediction:
+                    type: string

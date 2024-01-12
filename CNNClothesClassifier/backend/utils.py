@@ -32,7 +32,8 @@ classes = {
 }
 
 def transform_image(image_bytes):
-
+    """
+    """
     image = Image.open(io.BytesIO(image_bytes))
 
     transoformed_image = get_transformation()(image)
