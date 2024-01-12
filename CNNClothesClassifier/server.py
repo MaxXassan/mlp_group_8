@@ -10,15 +10,26 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 @app.route('/make-prediction', methods=['POST'])
 @cross_origin(supports_credentials=True)
 def make_prediction():
-    imagefile = request.files.get('myimage', '')
 
-    transformed_image = transform_image(imagefile.read())
+    try:
+        imagefile = request.files.get('myimage', '')
+        
+        if imagefile.name.split('.')[0] not in ['jpg', 'jpeg', 'png']:
+            raise Exception('Wrong file type, only JPG, JPEG and PNG allowed', 400)
+        
+        transformed_image = transform_image(imagefile.read())
 
-    print('Transformed Image', transformed_image.shape)
+        print('Transformed Image', transformed_image.shape)
+        
+        prediction = get_prediction(transformed_image)
+
+        return jsonify({ "prediction": prediction }), 200
     
-    prediction = get_prediction(transformed_image)
+    except Exception as e:
+        if len(e.args) == 1:
+            e.args = (e.args[0], 500)
 
-    return jsonify({ "prediction": prediction }), 200
+        return jsonify({ "errorMessage": e.args[0] }), e.args[1]
     
 
 if __name__ == '__main__':
