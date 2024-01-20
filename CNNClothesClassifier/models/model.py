@@ -1,7 +1,7 @@
 import torch.nn as nn
 import torch
 import matplotlib.pyplot as plt
-
+from torchmetrics import ConfusionMatrix, Accuracy, F1Score
 
 class ConvNet(nn.Module):
     #constructor of the ConvNet class, using cross entropy as its loss function.
@@ -13,7 +13,8 @@ class ConvNet(nn.Module):
                  test_loader = None, 
                  device = 'cpu', 
                  num_epochs = None, 
-                 learning_rate = None):
+                 learning_rate = None,
+                 num_classes = 10):
         super(ConvNet, self).__init__()
         self.layers = nn.Sequential(
             nn.Conv2d(1, 64, 2),
@@ -28,7 +29,9 @@ class ConvNet(nn.Module):
             nn.Dropout(p=0.25),
             nn.Linear(64, 10)
         )
-
+        self.tm_accuracy = Accuracy(task='multiclass', num_classes=num_classes)
+        self.tm_confusionmatrix = ConfusionMatrix(task='multiclass', num_classes=num_classes)
+        self.tm_f1score = F1Score(task='multiclass', num_classes=num_classes)
         self.train_losses = []
         self.test_losses = []
         self.accuracies = []
@@ -72,6 +75,22 @@ class ConvNet(nn.Module):
             self.accuracies.append(accuracy)
 
         print(f'Epoch [{epoch + 1}/{self.num_epochs}], Accuracy: {accuracy:.2f}%, Train Loss: {self.train_losses[-1]:.4f}, Test Loss: {self.test_losses[-1]:.4f}')
+
+    def test_model(self, loader):
+
+        self.eval()
+
+        with torch.no_grad():
+            for i, (image, label) in enumerate(loader):
+                out = self(image)
+                y_hat = torch.softmax(out, dim=1).argmax(dim=1)
+                self.tm_confusionmatrix.update(y_hat, label)
+                self.tm_accuracy.update(y_hat, label)
+                self.tm_f1score.update(y_hat, label)
+        fig, ax = self.tm_confusionmatrix.plot()
+        fig, ax = self.tm_accuracy.plot()
+        fig, ax = self.tm_f1score.plot()
+
 
     #function to train the model
     def train_model(self):
