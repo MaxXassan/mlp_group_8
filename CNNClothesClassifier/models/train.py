@@ -3,6 +3,7 @@ import torchvision
 import torchvision.transforms as transforms
 
 from model import ConvNet
+from base_line import BaseLine
 
 if __name__ == '__main__':
     # Device configuration
@@ -28,10 +29,11 @@ if __name__ == '__main__':
     test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
 
     # Initializing the model
-    model = ConvNet(train_loader, test_loader, device, num_epochs, learning_rate).to(device)
-
+    # model = ConvNet(train_loader, test_loader, device, num_epochs, learning_rate).to(device)
+    model = BaseLine(train_loader, test_loader, device, num_epochs, learning_rate).to(device)
+    
     # Trains, evaluates, and saves the model
     model.train_model()
 
     # Plotting the model
-    model.plots()
+    # model.plots()
