@@ -87,6 +87,7 @@ class ConvNet(nn.Module):
                 self.tm_confusionmatrix.update(y_hat, label)
                 self.tm_accuracy.update(y_hat, label)
                 self.tm_f1score.update(y_hat, label)
+        
         fig, ax = self.tm_confusionmatrix.plot()
         fig, ax = self.tm_accuracy.plot()
         fig, ax = self.tm_f1score.plot()
