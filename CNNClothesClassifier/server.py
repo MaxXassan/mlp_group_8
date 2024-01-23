@@ -13,8 +13,9 @@ def make_prediction():
 
     try:
         imagefile = request.files.get('myimage', '')
-        
-        if imagefile.name.split('.')[0] not in ['jpg', 'jpeg', 'png']:
+
+        file_extension = imagefile.filename.rsplit('.', 1)[1].lower()
+        if file_extension not in ['jpg', 'jpeg', 'png']:
             raise Exception('Wrong file type, only JPG, JPEG and PNG allowed', 400)
         
         transformed_image = transform_image(imagefile.read())
