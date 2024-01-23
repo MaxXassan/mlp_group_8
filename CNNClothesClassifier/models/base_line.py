@@ -9,9 +9,8 @@ import os
 writer = SummaryWriter("baseline_runs")
 
 class BaseLine(nn.Module):
-    #constructor of the ConvNet class, using cross entropy as its loss function.
-    #the rest is specified by the person creating an instance of this class.
-    #model architecture inspired by https://doi.org/10.37398/jsr.2020.640251.
+    #constructor of the Baseline class, using cross entropy as its loss function.
+    #Its a single layer neural network.
     #can be used both for training the model, but also to create an empty network to load the weights into.
     def __init__(self, 
                  train_loader = None, 
