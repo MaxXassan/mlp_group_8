@@ -33,7 +33,7 @@ def transform_image(image_bytes):
     """
     """
     image = Image.open(io.BytesIO(image_bytes))
-    
+    #background is removed using u2 algorithm, then converted to rgb mode.
     image_no_background = remove(image)
     image_no_background = image_no_background.convert('RGB')
 
