@@ -98,19 +98,29 @@ class ConvNet(nn.Module):
                 self.tm_confusionmatrix.update(y_hat, label)
                 self.tm_accuracy.update(y_hat, label)
                 self.tm_f1score.update(y_hat, label)
-        
-        fig, ax = self.tm_confusionmatrix.plot()
-        fig, ax = self.tm_accuracy.plot()
-        fig, ax = self.tm_f1score.plot()
 
-        plt.show()
+        # Print F1 score and accuracy
+            print(f'F1 Score: {self.tm_f1score.compute():.4f}')
+            print(f'Accuracy: {self.tm_accuracy.compute():.4f}')
+
+            # Plot the confusion matrix
+            fig, ax = self.tm_confusionmatrix.plot()
+
+            # Add title and class names
+            ax.set_title("Confusion Matrix - CNN model")
+            class_names = ["T-shirt/top", "Trouser", "Pullover", "Dress", "Coat", "Sandal", "Shirt", "Sneaker", "Bag", "Ankle boot"]
+            ax.set_xticklabels(class_names, rotation=45,fontsize='small')
+            ax.set_yticklabels(class_names, fontsize='small')
+
+            plt.show()
+
 
 
     #function to train the model
     def train_model(self):
         if self.test_loader == None or self.num_epochs == None or self.train_loader == None or self.learning_rate == None: return
 
-        self.optimizer = torch.optim.Adam(self.parameters(), lr=self.learning_rate, weight_decay=self.weight_decay)
+        self.optimizer = torch.optim.Adam(self.parameters(), lr=self.learning_rate, weight_decay= self.weight_decay)
 
         #training loopc
         for epoch in range(self.num_epochs):
@@ -150,7 +160,7 @@ class ConvNet(nn.Module):
         plt.figure(figsize=(10, 5))
         plt.plot(epochs, self.accuracies, marker='o', linestyle='-', color='b', label='Accuracy')
         plt.axhline(y=10, color='r', linestyle='-') #horizontal reference line at 10
-        plt.title('Accuracy Over Epochs')
+        plt.title('Accuracy Over Epoch - CNN model')
         plt.xlabel('Epochs')
         plt.ylabel('Accuracy (%)')
         plt.legend()
@@ -161,7 +171,7 @@ class ConvNet(nn.Module):
         plt.figure(figsize=(10, 5))
         plt.plot(epochs, self.train_losses, marker='o', linestyle='-', color='r', label='Train Loss')
         plt.plot(epochs, self.test_losses, marker='o', linestyle='-', color='g', label='Test Loss')
-        plt.title('Train and Test Loss Over Epochs')
+        plt.title('Train and Test Loss Over Epochs - CNN model')
         plt.xlabel('Epochs')
         plt.ylabel('Loss')
         plt.legend()
