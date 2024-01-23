@@ -8,3 +8,6 @@ torchaudio
 Flask
 flask-cors
 requests
+torchmetrics
+tensorboard
+scipy

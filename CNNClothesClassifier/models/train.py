@@ -3,14 +3,16 @@ import torchvision
 import torchvision.transforms as transforms
 
 from model import ConvNet
+from base_line import BaseLine
 
 if __name__ == '__main__':
     # Device configuration
     device = 'cpu'
 
     num_epochs = 10
-    batch_size = 128
+    batch_size = 4
     learning_rate = 0.001
+    weight_decay=0.0005
 
     # Data transformation
     transformation = transforms.Compose([
@@ -29,9 +31,11 @@ if __name__ == '__main__':
 
     # Initializing the model
     model = ConvNet(train_loader, test_loader, device, num_epochs, learning_rate).to(device)
+    #model = BaseLine(train_loader, test_loader, device, num_epochs, learning_rate).to(device)
+    
 
     # Trains, evaluates, and saves the model
     model.train_model()
 
     # Plotting the model
-    model.plots()
+    # model.plots()
