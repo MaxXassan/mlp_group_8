@@ -1,6 +1,9 @@
 import torch
 import torchvision
 import torchvision.transforms as transforms
+from sklearn.metrics import confusion_matrix
+import matplotlib.pyplot as plt
+import numpy as np
 import os
 import sys
 

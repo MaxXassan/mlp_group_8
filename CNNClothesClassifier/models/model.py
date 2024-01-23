@@ -2,6 +2,11 @@ import torch.nn as nn
 import torch
 import matplotlib.pyplot as plt
 from torchmetrics import ConfusionMatrix, Accuracy, F1Score
+import torch
+from torch.utils.tensorboard import SummaryWriter
+import os
+writer = SummaryWriter()
+
 
 class ConvNet(nn.Module):
     #constructor of the ConvNet class, using cross entropy as its loss function.
@@ -14,6 +19,7 @@ class ConvNet(nn.Module):
                  device = 'cpu', 
                  num_epochs = None, 
                  learning_rate = None,
+                 weight_decay = None,
                  num_classes = 10):
         super(ConvNet, self).__init__()
         self.layers = nn.Sequential(
@@ -43,6 +49,7 @@ class ConvNet(nn.Module):
         self.criterion = nn.CrossEntropyLoss()
         self.optimizer = None
         self.learning_rate = learning_rate
+        self.weight_decay = weight_decay
 
     def forward(self, x):
         return self.layers(x)
@@ -61,6 +68,9 @@ class ConvNet(nn.Module):
             self.train_losses.append(train_loss / len(self.train_loader))
             self.test_losses.append(test_loss / len(self.test_loader))
 
+            writer.add_scalars("Losses", {'train_loss': train_loss / len(self.train_loader),
+                                         'test_loss': test_loss / len(self.test_loader)}, epoch)
+            
             correct = 0
             total = 0
             for images, labels in self.test_loader:
@@ -72,6 +82,7 @@ class ConvNet(nn.Module):
                 correct += (predicted == labels).sum().item()
 
             accuracy = 100 * correct / total
+            writer.add_scalar("Accuracy", accuracy, epoch)
             self.accuracies.append(accuracy)
 
         print(f'Epoch [{epoch + 1}/{self.num_epochs}], Accuracy: {accuracy:.2f}%, Train Loss: {self.train_losses[-1]:.4f}, Test Loss: {self.test_losses[-1]:.4f}')
@@ -92,15 +103,16 @@ class ConvNet(nn.Module):
         fig, ax = self.tm_accuracy.plot()
         fig, ax = self.tm_f1score.plot()
 
+        plt.show()
+
 
     #function to train the model
     def train_model(self):
-        
         if self.test_loader == None or self.num_epochs == None or self.train_loader == None or self.learning_rate == None: return
 
-        self.optimizer = torch.optim.SGD(self.parameters(), lr=self.learning_rate)
+        self.optimizer = torch.optim.Adam(self.parameters(), lr=self.learning_rate, weight_decay=self.weight_decay)
 
-        #training loop
+        #training loopc
         for epoch in range(self.num_epochs):
             for i, (images, labels) in enumerate(self.train_loader, 0):
                 images = images.to(self.device)
@@ -108,6 +120,7 @@ class ConvNet(nn.Module):
 
                 outputs = self(images)
                 loss = self.criterion(outputs, labels)
+               
 
                 self.optimizer.zero_grad()
                 loss.backward()
@@ -115,11 +128,16 @@ class ConvNet(nn.Module):
 
                 if (i+1) % 2000 == 0:
                     print(f'Epoch [{epoch+1}/{self.num_epochs}], Step[{i+1}/{len(self.train_loader)}], Loss: {loss.item():.4f}')
-                    
-            self._evaluate_model(epoch)
             
-        #saving the weights
-        torch.save(self.state_dict(), './modelweights/model_weights.pth')
+            self._evaluate_model(epoch)
+        
+
+        # Flush the TensorBoard writer
+        writer.flush()
+
+        # Saving the weights
+        current_directory = os.path.dirname(os.path.abspath(__file__))
+        torch.save(self.state_dict(), current_directory+'/modelweights/model_weights.pth')
 
     def plots(self):
 
