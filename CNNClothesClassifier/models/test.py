@@ -51,7 +51,7 @@ if __name__ == '__main__':
     test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=32, shuffle=False)
 
 
-    '''Choose which model you want to train
+    '''Choose which model you want to test
     '''
     #test_CNN_model(test_loader, device, project_root)
 
