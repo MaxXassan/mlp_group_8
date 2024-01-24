@@ -52,13 +52,13 @@ class BaseLine(nn.Module):
 
         with torch.no_grad():
             train_loss = sum(self.criterion(self(images.to(self.device)), labels.to(self.device)) for images, labels in self.train_loader)
-            test_loss = sum(self.criterion(self(images.to(self.device)), labels.to(self.device)) for images, labels in self.test_loader)
+            eval_loss = sum(self.criterion(self(images.to(self.device)), labels.to(self.device)) for images, labels in self.test_loader)
 
             self.train_losses.append(train_loss / len(self.train_loader))
-            self.test_losses.append(test_loss / len(self.test_loader))
+            self.test_losses.append(eval_loss / len(self.test_loader))
 
             writer.add_scalars("Losses", {'train_loss': train_loss / len(self.train_loader),
-                                         'test_loss': test_loss / len(self.test_loader)}, epoch)
+                                         'eval_loss': eval_loss / len(self.test_loader)}, epoch)
             
             correct = 0
             total = 0
@@ -74,7 +74,7 @@ class BaseLine(nn.Module):
             writer.add_scalar("Accuracy", accuracy, epoch)
             self.accuracies.append(accuracy)
 
-        print(f'Epoch [{epoch + 1}/{self.num_epochs}], Accuracy: {accuracy:.2f}%, Train Loss: {self.train_losses[-1]:.4f}, Test Loss: {self.test_losses[-1]:.4f}')
+        print(f'Epoch [{epoch + 1}/{self.num_epochs}], Accuracy: {accuracy:.2f}%, Train Loss: {self.train_losses[-1]:.4f}, Evaluation Loss: {self.test_losses[-1]:.4f}')
 
     def test_model(self, loader):
 
@@ -160,8 +160,8 @@ class BaseLine(nn.Module):
         #train and test loss plot
         plt.figure(figsize=(10, 5))
         plt.plot(epochs, self.train_losses, marker='o', linestyle='-', color='r', label='Train Loss')
-        plt.plot(epochs, self.test_losses, marker='o', linestyle='-', color='g', label='Test Loss')
-        plt.title('Train and Test Loss Over Epochs - Baseline model')
+        plt.plot(epochs, self.test_losses, marker='o', linestyle='-', color='g', label='Evaluation Loss')
+        plt.title('Train and Evaluation Loss Over Epochs - Baseline model')
         plt.xlabel('Epochs')
         plt.ylabel('Loss')
         plt.legend()
