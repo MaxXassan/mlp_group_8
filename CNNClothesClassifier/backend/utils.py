@@ -3,7 +3,6 @@ import torch
 import io
 import sys
 import os
-from rembg import remove
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(project_root)
 
@@ -33,11 +32,7 @@ def transform_image(image_bytes):
     """
     """
     image = Image.open(io.BytesIO(image_bytes))
-    #background is removed using u2 algorithm, then converted to rgb mode.
-    image_no_background = remove(image)
-    image_no_background = image_no_background.convert('RGB')
-
-    transoformed_image = get_transformation()(image_no_background)
+    transoformed_image = get_transformation()(image)
 
     return transoformed_image.unsqueeze(dim=0)
 #get the prediction and return it.

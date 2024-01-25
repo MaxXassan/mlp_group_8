@@ -3,9 +3,12 @@ import torchvision
 import torchvision.transforms as transforms
 import os
 import sys
-
 from model import ConvNet
 from base_line import BaseLine
+
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.append(project_root)
+from data.custom_dataset import create_data_loader
 
 def test_CNN_model(test_loader, device, project_root):
     
@@ -50,10 +53,17 @@ if __name__ == '__main__':
     
     test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=32, shuffle=False)
 
+    real_world_loader = create_data_loader()
+
 
     '''Choose which model you want to test
     '''
-    #test_CNN_model(test_loader, device, project_root)
-
+    #for testing on testdata
+    test_CNN_model(test_loader, device, project_root)
     test_baseline_model(test_loader, device, project_root)
+
+    #for testing on real world data
+    # test_CNN_model(real_world_loader, device, project_root)
+    # test_baseline_model(real_world_loader, device, project_root)
+
 

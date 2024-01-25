@@ -11,4 +11,3 @@ requests
 torchmetrics
 scipy
 tensorboard
-rembg
